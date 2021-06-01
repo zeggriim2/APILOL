@@ -1,0 +1,21 @@
+{
+    "name": "zeggriim/apilol",
+    "description": "Liste des API de League Of Legends",
+    "authors": [
+        {
+            "name": "Zeggriim2",
+            "email": "51760726+zeggriim2@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.3"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "5.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LolApi\\": "src/LolApi/"
+        }
+    }
+}
