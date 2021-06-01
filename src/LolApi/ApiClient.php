@@ -7,17 +7,19 @@ use LolApi\API\GeneralApi;
 
 class ApiClient {
 
-
-    private $region;
     /**
      * @var string
      */
-    private $apiKey;
+    private string $region;
+    /**
+     * @var string
+     */
+    private string $apiKey;
 
     /**
      * @var Client
      */
-    private $httpClient;
+    private Client $httpClient;
 
 
     /**

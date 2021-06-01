@@ -21,8 +21,10 @@ class BaseApi {
     }
 
     public function callApi(string $url, $method = "GET"){
-//        $response = $this->apiClient->getHttpClient()->request($method, $url);
-        $response = $this->apiClient->getHttpClient()->get($method,$url);
-        dd($response);
+
+        $response = $this->apiClient->getHttpClient()->request($method,$url);
+//        return json_decode($response->getBody(), true);
+        return $response->getBody()->read(5000);
+        // TODO gestion des erreurs
     }
 }
