@@ -1,30 +1,27 @@
 <?php
 
-namespace LolApi\API;
+namespace Zeggriim\LolApi\API;
 
-use LolApi\ApiClient;
-use function Couchbase\defaultDecoder;
+
+use GuzzleHttp\Client;
+use Zeggriim\LolApi\ApiClient;
 
 class BaseApi {
+
     /**
-     * @var ApiClient
+     * @var Client
      */
-    protected $apiClient;
+    protected Client $httpClient;
 
     /**
      * BaseApi constructor.
-     * @param ApiClient $apiClient
      */
-    public function __construct(ApiClient $apiClient)
+    public function __construct()
     {
-        $this->apiClient = $apiClient;
+        $this->httpClient = new Client();
     }
 
-    public function callApi(string $url, $method = "GET"){
+    protected function callApi(string $url,$queryParameters = [] , $method = "GET"){
 
-        $response = $this->apiClient->getHttpClient()->request($method,$url);
-//        return json_decode($response->getBody(), true);
-        return $response->getBody()->read(5000);
-        // TODO gestion des erreurs
     }
 }

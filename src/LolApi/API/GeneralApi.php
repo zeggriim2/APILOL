@@ -1,6 +1,6 @@
 <?php
 
-namespace LolApi\API;
+namespace Zeggriim\LolApi\API;
 
 class GeneralApi extends BaseApi {
 
@@ -10,7 +10,7 @@ class GeneralApi extends BaseApi {
     const API_URL_GAMEMODES = "http://static.developer.riotgames.com/docs/lol/gameModes.json";
     const API_URL_GAMETYPES = "http://static.developer.riotgames.com/docs/lol/gameTypes.json";
 
-    const API_URL_VERSION = "https://ddragon.leagueoflegends.com/api/versions.json";
+    const API_URL_VERSIONS = "https://ddragon.leagueoflegends.com/api/versions.json";
 
 
     public function getSeason()
@@ -38,8 +38,8 @@ class GeneralApi extends BaseApi {
         return $this->callApi(self::API_URL_GAMETYPES);
     }
 
-    public function getVersion()
+    public function getVersions()
     {
-        return $this->callApi(self::API_URL_VERSION);
+        return $this->httpClient->get(self::API_URL_VERSIONS);
     }
 }
