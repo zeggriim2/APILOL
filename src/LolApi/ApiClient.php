@@ -3,7 +3,9 @@
 namespace Zeggriim\LolApi;
 
 use GuzzleHttp\Client;
+use Zeggriim\LolApi\API\ChampionApi;
 use Zeggriim\LolApi\API\GeneralApi;
+use function PHPUnit\Framework\assertGreaterThanOrEqual;
 
 class ApiClient {
 
@@ -104,10 +106,6 @@ class ApiClient {
      */
     private string $apiKey;
 
-    /**
-     * @var Client
-     */
-    protected Client $httpClient;
 
     protected string $version;
 
@@ -142,17 +140,23 @@ class ApiClient {
 
     private function checkVersion($version)
     {
-        $versions = (array) json_decode((new GeneralApi())->getVersions()->getBody());
-        return in_array($version, $versions) ?: false;
-    }
 
-    public function getHttpClient()
-    {
-        return $this->httpClient;
+        $versions = (array) (new GeneralApi($this))->getVersions();
+        return in_array($version, $versions) ?: false;
     }
 
     public function getVersion()
     {
         return $this->version;
+    }
+
+    public function getLang()
+    {
+        return $this->lang;
+    }
+
+    public function championApi()
+    {
+        return new ChampionApi($this);
     }
 }

@@ -10,14 +10,20 @@ class ChampionApi extends BaseApi {
 
     public function getAllChampions()
     {
+        $params = [
+            'version'   => $this->apiClient->getVersion(),
+            'lang'       => $this->apiClient->getLang()
+            ];
+        $url = $this->constructUrl(self::API_CHAMPIONS_URL,$params);
+        return $this->callApi($url);
 
-        $this->callApi(self::API_CHAMPIONS_URL);
     }
 
     private function constructUrl(string $url, array $params)
     {
         foreach($params as $key => $param){
-
+            $url = str_replace("{{$key}}", $param, $url);
         }
+        return $url;
     }
 }

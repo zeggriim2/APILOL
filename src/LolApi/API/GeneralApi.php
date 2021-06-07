@@ -2,6 +2,8 @@
 
 namespace Zeggriim\LolApi\API;
 
+use phpDocumentor\Reflection\Types\This;
+
 class GeneralApi extends BaseApi {
 
     const API_URL_SEASONS = "http://static.developer.riotgames.com/docs/lol/seasons.json";
@@ -40,6 +42,6 @@ class GeneralApi extends BaseApi {
 
     public function getVersions()
     {
-        return $this->httpClient->get(self::API_URL_VERSIONS);
+        return $this->callApi(self::API_URL_VERSIONS);
     }
 }
