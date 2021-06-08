@@ -159,4 +159,9 @@ class ApiClient {
     {
         return new ChampionApi($this);
     }
+
+    public function generalApi()
+    {
+        return new GeneralApi($this);
+    }
 }
