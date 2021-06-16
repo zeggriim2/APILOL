@@ -2,10 +2,9 @@
 
 namespace Zeggriim\LolApi;
 
-use GuzzleHttp\Client;
+use Zeggriim\Logger\Log4Php;
 use Zeggriim\LolApi\API\ChampionApi;
 use Zeggriim\LolApi\API\GeneralApi;
-use function PHPUnit\Framework\assertGreaterThanOrEqual;
 
 class ApiClient {
 
@@ -111,6 +110,11 @@ class ApiClient {
 
     protected string $lang;
 
+    /**
+     * @var Log4Php
+     */
+    private Log4Php $log4php;
+
 
     /**
      * ApiClient constructor.
@@ -125,6 +129,7 @@ class ApiClient {
         $this->apiKey = $apiKey;
         $this->version = $this->checkVersion($version) ? $version : '11.11.1'  ;
         $this->lang = $this->checkLang($lang) ? $lang : 'fr_FR';
+        $this->log4php = new Log4Php();
     }
 
     public function getApiKey()
