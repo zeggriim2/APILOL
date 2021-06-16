@@ -37,9 +37,13 @@ class BaseApi {
     protected function callApi(string $url,$queryParameters = [] , $method = "GET")
     {
         $res = $this->getHttpClient()->request($method,$url);
-        $request = json_decode($res->getBody()->getContents(),true);
-        if (array_key_exists("date", $request)){
-            return $request['data'];
+        $request = json_decode($res->getBody()->getContents(), true);
+        if (is_array($request)){
+            if (array_key_exists("data", $request)){
+                return $request['data'];
+            }else{
+                return $request;
+            }
         }else{
             return $request;
         }

@@ -12,5 +12,7 @@ require_once PATH_RACINE . DIRECTORY_SEPARATOR . "vendor/autoload.php";
 
 $apiClient = new ApiClient(REGION, APIKEY, LANG, VERSION);
 
-$res = $apiClient->championApi()->getAllChampions();
-dd($res);
+$champions = $apiClient->championApi()->getAllChampions();
+
+$championAatrox = $apiClient->championApi()->getChampion($champions['Aatrox']['id']);
+dd($championAatrox);
