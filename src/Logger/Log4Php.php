@@ -8,16 +8,13 @@ class Log4Php
     public $loggers = array();
     public $current = 'root';
 
-    const PATH_RACINE = dirname(__DIR__);
 
-    public function __construct()
+    public function __construct($config_path = null)
     {
-        $log = \Logger::getLogger("foor");
-        dd(__DIR__);
-
-        require_once $lib_path . DIRECTORY_SEPARATOR . 'Logger.php';
-        \Logger::configure($config_path . DIRECTORY_SEPARATOR .'log4php.xml');
-        $this->loggers['root'] = \Logger::getRootLogger();
+        if (is_null($config_path)){
+            \Logger::configure(dirname(__DIR__,2) . DIRECTORY_SEPARATOR .'log4php.xml');
+        }
+        $this->loggers[$this->current] = \Logger::getRootLogger();
     }
 
     public function hclog($logger,string $level, $msg)

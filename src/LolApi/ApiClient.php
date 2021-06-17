@@ -162,6 +162,7 @@ class ApiClient {
 
     public function championApi()
     {
+        $this->log4php->hclog("root", "inf", "test de message");
         return new ChampionApi($this);
     }
 
