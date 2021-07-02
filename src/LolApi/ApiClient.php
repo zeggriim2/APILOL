@@ -2,7 +2,8 @@
 
 namespace Zeggriim\LolApi;
 
-use GuzzleHttp\Client;
+use Zeggriim\Logger\Log4Php;
+use Zeggriim\LolApi\API\ChampionApi;
 use Zeggriim\LolApi\API\GeneralApi;
 
 class ApiClient {
@@ -104,14 +105,15 @@ class ApiClient {
      */
     private string $apiKey;
 
-    /**
-     * @var Client
-     */
-    protected Client $httpClient;
 
     protected string $version;
 
     protected string $lang;
+
+    /**
+     * @var Log4Php
+     */
+    private Log4Php $log4php;
 
 
     /**
@@ -127,6 +129,7 @@ class ApiClient {
         $this->apiKey = $apiKey;
         $this->version = $this->checkVersion($version) ? $version : '11.11.1'  ;
         $this->lang = $this->checkLang($lang) ? $lang : 'fr_FR';
+        $this->log4php = new Log4Php();
     }
 
     public function getApiKey()
@@ -142,17 +145,29 @@ class ApiClient {
 
     private function checkVersion($version)
     {
-        $versions = (array) json_decode((new GeneralApi())->getVersions()->getBody());
-        return in_array($version, $versions) ?: false;
-    }
 
-    public function getHttpClient()
-    {
-        return $this->httpClient;
+        $versions = (array) (new GeneralApi($this))->getVersions();
+        return in_array($version, $versions) ?: false;
     }
 
     public function getVersion()
     {
         return $this->version;
+    }
+
+    public function getLang()
+    {
+        return $this->lang;
+    }
+
+    public function championApi()
+    {
+        $this->log4php->hclog("root", "inf", "test de message");
+        return new ChampionApi($this);
+    }
+
+    public function generalApi()
+    {
+        return new GeneralApi($this);
     }
 }

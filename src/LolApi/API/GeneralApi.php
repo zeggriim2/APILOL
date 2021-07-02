@@ -2,30 +2,50 @@
 
 namespace Zeggriim\LolApi\API;
 
+use phpDocumentor\Reflection\Types\This;
+
 class GeneralApi extends BaseApi {
 
-    const API_URL_SEASONS = "http://static.developer.riotgames.com/docs/lol/seasons.json";
-    const API_URL_QUEUES = "http://static.developer.riotgames.com/docs/lol/queues.json";
-    const API_URL_MAPS = "http://static.developer.riotgames.com/docs/lol/maps.json";
-    const API_URL_GAMEMODES = "http://static.developer.riotgames.com/docs/lol/gameModes.json";
-    const API_URL_GAMETYPES = "http://static.developer.riotgames.com/docs/lol/gameTypes.json";
+    const BASE_URL_STATIC = "http://static.developer.riotgames.com/docs/lol/";
+    const API_URL_SEASONS = "seasons.json";
+    const API_URL_QUEUES = "queues.json";
+    const API_URL_MAPS = "maps.json";
+    const API_URL_GAMEMODES = "gameModes.json";
+    const API_URL_GAMETYPES = "gameTypes.json";
 
-    const API_URL_VERSIONS = "https://ddragon.leagueoflegends.com/api/versions.json";
+    const BASE_URL_DDRAGON = "https://ddragon.leagueoflegends.com/api/";
+    const API_URL_VERSIONS = "versions.json";
+
+    CONST LIEN_URL = [
+        self::BASE_URL_STATIC => [
+            self::API_URL_SEASONS,
+            self::API_URL_QUEUES,
+            self::API_URL_MAPS,
+            self::API_URL_GAMEMODES,
+            self::API_URL_GAMETYPES
+        ],
+        self::BASE_URL_DDRAGON => [
+            self::API_URL_VERSIONS
+        ]
+    ];
 
 
     public function getSeason()
     {
-        return $this->callApi(self::API_URL_SEASONS);
+        $url = $this->buildUrlStatic(self::API_URL_SEASONS);
+        return $this->callApi($url);
     }
 
     public function getQueues()
     {
-        return $this->callApi(self::API_URL_QUEUES);
+        $url = $this->buildUrlStatic(self::API_URL_QUEUES);
+        return $this->callApi($url);
     }
 
     public function getMaps()
     {
-        return $this->callApi(self::API_URL_MAPS);
+        $url = $this->buildUrlStatic(self::API_URL_MAPS);
+        return $this->callApi($url);
     }
 
     public function getsGameModes()
@@ -40,6 +60,18 @@ class GeneralApi extends BaseApi {
 
     public function getVersions()
     {
-        return $this->httpClient->get(self::API_URL_VERSIONS);
+        $url = $this->buildUrlDdragon(self::API_URL_VERSIONS);
+        return $this->callApi($url);
     }
+
+    private function buildUrlStatic(string $endUrl)
+    {
+        return self::BASE_URL_STATIC . $endUrl;
+    }
+
+    private function buildUrlDdragon(string $endUrl)
+    {
+        return self::BASE_URL_DDRAGON . $endUrl;
+    }
+
 }

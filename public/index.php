@@ -10,8 +10,9 @@ define("VERSION", "11.10.1");
 
 require_once PATH_RACINE . DIRECTORY_SEPARATOR . "vendor/autoload.php";
 
-mail('lilian.dorazio@hotmail.fr', 'test', "Message d'un email");
-dd('test');
-
 $apiClient = new ApiClient(REGION, APIKEY, LANG, VERSION);
-dump($apiClient);
+
+$champions = $apiClient->championApi()->getAllChampions();
+
+$championAatrox = $apiClient->championApi()->getChampion($champions['Aatrox']['id']);
+dd($championAatrox);
